@@ -21,12 +21,10 @@ class CardAdapter(var itemClickListener: ItemClickListener) :
             this.binding = binding
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CostCalculationViewHolder {
         val binding = ItemHomeCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CostCalculationViewHolder(binding)
     }
-
     override fun onBindViewHolder(holder: CostCalculationViewHolder, position: Int) {
         val item = list[position]
 
