@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.sp
 fun Firebase() {
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Toolbar()
+        Toolbar("FIREBASE CONFIGURATIONS","Firebase Configuration Settings")
         Image(
             painter = painterResource(id = R.drawable.save),
             contentDescription = "save button",

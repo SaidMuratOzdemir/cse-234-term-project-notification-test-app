@@ -24,13 +24,13 @@ import androidx.compose.ui.unit.dp
 fun History() {
 
     var boxVisible by remember { mutableStateOf(true) }
-    Toolbar()
+    Toolbar("HISTORY","All the notifications has sent your device")
     Image(
         painter = painterResource(id = R.drawable.delete2),
         contentDescription = "delete",
         modifier = Modifier
             .size(50.dp)
-            .offset(310.dp, 10.dp)
+            .offset(320.dp, 12.dp)
             .clickable(onClick = { boxVisible = false }),
 
         )

@@ -32,7 +32,7 @@ import kotlin.math.max
 @Preview
 fun SeeToken() {
 
-    Toolbar()
+    Toolbar("TOKEN","Your Firebase Token. That is unique for your device.")
 
     Column(
         modifier = Modifier

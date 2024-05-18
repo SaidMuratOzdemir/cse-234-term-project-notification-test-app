@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 @Preview
 fun Main() {
 
-    Toolbar()
+    Toolbar("NOTIFICATION TEST APP","Push Notification ")
 
     LazyColumn(
         modifier = Modifier
