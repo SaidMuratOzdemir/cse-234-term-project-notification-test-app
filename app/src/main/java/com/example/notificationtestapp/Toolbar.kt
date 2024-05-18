@@ -27,8 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Toolbar() {
-    val toolbarTitle = listOf("Firabase","History","Main","Token")
+fun Toolbar(title:String,subtitle:String) {
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -56,18 +55,18 @@ fun Toolbar() {
 
         Column {
             Text(
-                text = "Notification Test App",
+                text = title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp),
                 fontStyle = FontStyle.Italic,
                 color = Color(0xFF332885),
                 fontWeight = FontWeight(999),
-                fontSize = 20.sp
+                fontSize = 19.sp
             )
             Spacer(modifier = Modifier.height(6.dp))
             Text(
-                text = "Push Notification Test App",
+                text = subtitle,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
