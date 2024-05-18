@@ -71,7 +71,7 @@ fun Toolbar(title:String,subtitle:String) {
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
                 color = Color(0xFF5341DA),
-                fontSize = 12.sp,
+                fontSize = 13.sp,
                 fontWeight = FontWeight.W900
 
 
