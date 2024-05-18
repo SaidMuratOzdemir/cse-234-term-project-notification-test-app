@@ -46,7 +46,7 @@ fun Firebase() {
             painter = painterResource(id = R.drawable.save),
             contentDescription = "save button",
             modifier = Modifier
-                .padding(start = 320.dp)
+                .padding(start = 325.dp)
                 .padding(top = 3.dp)
                 .clickable { }
                 .windowInsetsPadding(insets = WindowInsets.statusBars)
