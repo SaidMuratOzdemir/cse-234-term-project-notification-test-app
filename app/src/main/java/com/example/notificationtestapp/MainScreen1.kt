@@ -12,9 +12,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 @Preview
-fun Main() {
+fun MainScreen1() {
 
-    Toolbar("NOTIFICATION TEST APP","Push Notification ")
+    Toolbar1("NOTIFICATION TEST APP","Push Notification ")
 
     LazyColumn(
         modifier = Modifier
@@ -23,7 +23,7 @@ fun Main() {
 
     ) {
         item {
-            HomeCard(
+            HomeCard1(
                 title = "Enter Firebase Configurations",
                 subtitle = "Enter Firebase Configurations or import google-services.json file",
                 R.drawable.settings,false
@@ -33,7 +33,7 @@ fun Main() {
             Spacer(modifier = Modifier.height(10.dp))
         }
         item {
-            HomeCard(
+            HomeCard1(
                 title = "Check Notification Permission",
                 subtitle ="Check if notification permission is granted",
                 R.drawable.check,false
@@ -43,7 +43,7 @@ fun Main() {
             Spacer(modifier = Modifier.height(10.dp))
         }
         item {
-            HomeCard(
+            HomeCard1(
                 title ="See Device Token",
                 subtitle ="See Firebase token that is generated for your device",
                 R.drawable.phone,false
@@ -53,7 +53,7 @@ fun Main() {
             Spacer(modifier = Modifier.height(10.dp))
         }
         item {
-            HomeCard(
+            HomeCard1(
                 title ="See Notification History",
                 subtitle ="See notifications that has been sent to your device",
                 R.drawable.history,false
@@ -63,13 +63,13 @@ fun Main() {
             Spacer(modifier = Modifier.height(10.dp))
         }
         item {
-            HomeCard(title ="Language", subtitle ="Select Language", R.drawable.language,false)
+            HomeCard1(title ="Language", subtitle ="Select Language", R.drawable.language,false)
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
         }
         item {
-            HomeCard(
+            HomeCard1(
                 title ="Change Theme",
                 subtitle ="Switch between light and dark theme",
                 R.drawable.darkmode,true
@@ -79,7 +79,7 @@ fun Main() {
             Spacer(modifier = Modifier.height(10.dp))
         }
         item {
-            HomeCard(title ="About Us", subtitle ="See information about us", R.drawable.info,false)
+            HomeCard1(title ="About Us", subtitle ="See information about us", R.drawable.info,false)
         }
     }
 

@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 @Preview
-fun History() {
+fun History1() {
 
     var boxVisible by remember { mutableStateOf(true) }
-    Toolbar("HISTORY","All the notifications has sent your device")
+    Toolbar1("HISTORY","All the notifications has sent your device")
     Image(
         painter = painterResource(id = R.drawable.delete2),
         contentDescription = "delete",
@@ -43,7 +43,7 @@ fun History() {
 
         ) {
             items(10) {
-            HomeCard(
+            HomeCard1(
                 title = "Notification "+i+" Title",
                 subtitle = "Notification "+i+++" Description",
                 R.drawable.ic_launcher_foreground,false

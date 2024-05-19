@@ -35,7 +35,7 @@ import com.example.notificationtestapp.ui.theme.poppinsMedium
 import com.example.notificationtestapp.ui.theme.primary
 
 @Composable
-fun HomeCard(title: String, subtitle: String, image: Int, isSwitchEnabled: Boolean) {
+fun HomeCard1(title: String, subtitle: String, image: Int, isSwitchEnabled: Boolean) {
     var checked by remember { mutableStateOf(false) }
 
     Row(

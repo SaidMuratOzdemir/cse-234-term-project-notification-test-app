@@ -38,10 +38,10 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 @Preview
-fun Firebase() {
+fun Firebase1() {
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Toolbar("FIREBASE CONFIGURATIONS","Firebase Configuration Settings")
+        Toolbar1("FIREBASE CONFIGURATIONS","Firebase Configuration Settings")
         Image(
             painter = painterResource(id = R.drawable.save),
             contentDescription = "save button",
