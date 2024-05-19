@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 @Preview
 fun History1() {
-
     var boxVisible by remember { mutableStateOf(true) }
     Toolbar1("HISTORY","All the notifications has sent your device")
     Image(
