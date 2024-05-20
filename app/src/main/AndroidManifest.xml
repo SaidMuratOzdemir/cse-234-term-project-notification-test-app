@@ -13,8 +13,29 @@
         android:theme="@style/Theme.NotificationTestApp"
         tools:targetApi="31">
         <activity
-            android:name=".AboutUs"
+            android:name=".SeeTokenActivity"
             android:exported="false"
+            android:label="@string/title_activity_see_token"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_history"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".FirebaseConfigActivity"
+            android:exported="false"
+            android:label="@string/title_activity_firebase_config"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_about_us"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".HomeScreenActivity"
+            android:exported="false"
+            android:label="@string/title_activity_home_screen"
             android:theme="@style/Theme.NotificationTestApp" />
         <activity
             android:name=".MainActivity"
