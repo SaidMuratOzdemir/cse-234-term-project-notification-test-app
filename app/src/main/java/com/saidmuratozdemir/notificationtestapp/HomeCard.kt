@@ -38,19 +38,14 @@ import com.saidmuratozdemir.notificationtestapp.ui.theme.primaryTextColor
 
 @Composable
 fun HomeCard(
-    title: String,
-    subtitle: String,
-    image: Int,
-    isSwitchEnabled: Boolean = false
+    title: String, subtitle: String, image: Int, isSwitchEnabled: Boolean = false
 ) {
     var checked by remember { mutableStateOf(false) }
 
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .clickable { },
-        Arrangement.Center
-
+            .clickable { }, Arrangement.Center
     ) {
         Row(
             modifier = Modifier
@@ -69,14 +64,11 @@ fun HomeCard(
                     .fillMaxHeight(1f)
                     .clip(RoundedCornerShape(0.3f)),
                 Arrangement.Center
-
-
             ) {
                 Image(
                     painter = painterResource(id = image),
                     contentDescription = "HomeCardImage",
-                    modifier = Modifier
-                        .size(60.dp)
+                    modifier = Modifier.size(60.dp)
                 )
             }
             Box(modifier = Modifier.fillMaxSize()) {
@@ -84,26 +76,21 @@ fun HomeCard(
                 Column(modifier = Modifier.fillMaxSize(), Arrangement.Center) {
                     Text(
                         text = title,
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontFamily = poppinsBlack,
                         fontSize = 14.sp
-
-
                     )
+
                     Text(
                         text = subtitle,
-                        modifier = Modifier
-                            .width(200.dp),
+                        modifier = Modifier.width(200.dp),
                         maxLines = 3,
                         fontFamily = poppinsMedium,
                         color = Color.Gray,
                         fontSize = 10.sp,
-
-                        )
-
+                    )
                 }
                 Column {
                     if (isSwitchEnabled) {
@@ -115,12 +102,9 @@ fun HomeCard(
                                 .padding(top = 30.dp)
                                 .padding(start = 240.dp)
                         )
-
                     }
                 }
             }
-
         }
-
     }
 }

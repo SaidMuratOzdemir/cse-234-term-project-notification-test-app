@@ -33,7 +33,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.saidmuratozdemir.notificationtestapp.ui.theme.NotificationTestAppTheme
 
@@ -43,71 +42,59 @@ class FirebaseConfigActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NotificationTestAppTheme {
-                FirebaseConfig()
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Toolbar("FIREBASE CONFIGURATIONS", "Firebase Configuration Settings")
+                    Image(painter = painterResource(id = R.drawable.save),
+                        contentDescription = "save button",
+                        modifier = Modifier
+                            .padding(start = 325.dp)
+                            .padding(top = 3.dp)
+                            .clickable { }
+                            .windowInsetsPadding(insets = WindowInsets.statusBars))
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 210.dp), Arrangement.Center
+                ) {
+
+                    StringTextField("Project Url")
+                    StringTextField(text = "Project ID")
+                    StringTextField(text = "E-Mail Address")
+                    StringTextField(text = "Api Key")
+                }
             }
         }
     }
-}
 
-@Composable
-@Preview
-fun FirebaseConfig() {
+    @Composable
+    fun StringTextField(text: String) {
+        var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Toolbar("FIREBASE CONFIGURATIONS", "Firebase Configuration Settings")
-        Image(
-            painter = painterResource(id = R.drawable.save),
-            contentDescription = "save button",
-            modifier = Modifier
-                .padding(start = 325.dp)
-                .padding(top = 3.dp)
-                .clickable { }
-                .windowInsetsPadding(insets = WindowInsets.statusBars)
-        )
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 210.dp),
-        Arrangement.Center
-    ) {
-
-        StringTextField("Project Url")
-        StringTextField(text = "Project ID")
-        StringTextField(text = "E-Mail Address")
-        StringTextField(text = "Api Key")
-    }
-}
-
-@Composable
-fun StringTextField(text: String) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier
-                .padding(bottom = 4.dp)
-                .align(Alignment.CenterVertically)
-                .size(110.dp, 20.dp),
-            maxLines = 1,
-            color = Color.Gray,
-        )
-
-        TextField(
-            value = textFieldValue,
-            onValueChange = { textFieldValue = it },
-            label = { Text("Enter $text") },
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(40.dp)
-                .clip(CircleShape)
-        )
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            Text(
+                text = text,
+                modifier = Modifier
+                    .padding(bottom = 4.dp)
+                    .align(Alignment.CenterVertically)
+                    .size(110.dp, 20.dp),
+                maxLines = 1,
+                color = Color.Gray,
+            )
+
+            TextField(value = textFieldValue,
+                onValueChange = { textFieldValue = it },
+                label = { Text("Enter $text") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(40.dp)
+                    .clip(CircleShape)
+            )
+        }
+        Spacer(modifier = Modifier.height(15.dp))
     }
-    Spacer(modifier = Modifier.height(15.dp))
 }

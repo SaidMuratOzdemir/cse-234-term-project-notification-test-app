@@ -26,6 +26,26 @@ class RegisterActivity : ComponentActivity() {
                     )
                 }
             }
+
+            // TODO : We will put this when user register
+//    var i = 1
+//    if (boxVisible) {
+//        LazyColumn(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(top = 110.dp)
+//
+//        ) {
+//            items(10) {
+//                HomeCard(
+//                    title = "Notification " + i + " Title",
+//                    subtitle = "Notification " + i++ + " Description",
+//                    R.drawable.ic_launcher_foreground, false
+//                )
+//                Spacer(modifier = Modifier.height(10.dp))
+//            }
+//        }
+//    }
         }
     }
 }
