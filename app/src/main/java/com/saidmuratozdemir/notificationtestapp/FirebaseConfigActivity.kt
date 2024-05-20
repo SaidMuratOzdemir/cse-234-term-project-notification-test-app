@@ -80,25 +80,6 @@ fun FirebaseConfig() {
         StringTextField(text = "Project ID")
         StringTextField(text = "E-Mail Address")
         StringTextField(text = "Api Key")
-//        Text(
-//            text = "Or Upload Json File",
-//            modifier = Modifier
-//                .padding(top = 20.dp)
-//                .fillMaxWidth(),
-//            maxLines = 1,
-//            textAlign = TextAlign.Center,
-//            color = Color.White,
-//            fontSize = 21.sp,
-//            fontWeight = FontWeight(700)
-//        )
-//        Spacer(modifier = Modifier.height(15.dp))
-//        Image(painter = painterResource(id = R.drawable.upload),
-//            contentDescription = "save button",
-//            modifier = Modifier
-//                .size(140.dp)
-//                .align(Alignment.CenterHorizontally)
-//                .clickable { }
-//        )
     }
 }
 
