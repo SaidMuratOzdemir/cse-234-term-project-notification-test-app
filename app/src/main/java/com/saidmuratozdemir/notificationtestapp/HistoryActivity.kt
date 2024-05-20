@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.saidmuratozdemir.notificationtestapp.ui.theme.NotificationTestAppTheme
 
 class HistoryActivity : ComponentActivity() {
@@ -58,9 +58,8 @@ class HistoryActivity : ComponentActivity() {
                     items(notificationList.size) {
                         HomeCard(
                             title = notificationList[it].title,
-                            subtitle = notificationList[it].body,
-                            R.drawable.ic_launcher_foreground,
-                            false
+                            subtitle = notificationList[it].body + " " + notificationList[it].date,
+                            R.drawable.ic_launcher_foreground
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                     }
