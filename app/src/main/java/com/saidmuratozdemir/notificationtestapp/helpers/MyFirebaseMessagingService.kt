@@ -1,4 +1,4 @@
-package com.saidmuratozdemir.notificationtestapp
+package com.saidmuratozdemir.notificationtestapp.helpers
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.saidmuratozdemir.notificationtestapp.R
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 

@@ -1,4 +1,4 @@
-package com.saidmuratozdemir.notificationtestapp
+package com.saidmuratozdemir.notificationtestapp.components
 
 import android.content.Intent
 import android.net.Uri
@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.saidmuratozdemir.notificationtestapp.R
 
 @Composable
 fun ProfileCard(name: String, profilePicture: Int, gitHubLink: String, linkedInLink: String) {

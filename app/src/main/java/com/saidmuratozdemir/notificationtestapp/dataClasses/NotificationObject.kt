@@ -1,4 +1,4 @@
-package com.saidmuratozdemir.notificationtestapp
+package com.saidmuratozdemir.notificationtestapp.dataClasses
 
 data class NotificationObject(
     val title: String,

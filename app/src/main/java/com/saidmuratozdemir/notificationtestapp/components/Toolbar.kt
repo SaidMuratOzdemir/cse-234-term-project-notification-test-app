@@ -1,4 +1,4 @@
-package com.saidmuratozdemir.notificationtestapp
+package com.saidmuratozdemir.notificationtestapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.saidmuratozdemir.notificationtestapp.R
 
 
 @Composable

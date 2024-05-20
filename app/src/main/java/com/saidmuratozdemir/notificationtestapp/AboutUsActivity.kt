@@ -22,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
+import com.saidmuratozdemir.notificationtestapp.components.ProfileCard
+import com.saidmuratozdemir.notificationtestapp.components.Toolbar
 import com.saidmuratozdemir.notificationtestapp.ui.theme.NotificationTestAppTheme
 
 class AboutUsActivity : ComponentActivity() {

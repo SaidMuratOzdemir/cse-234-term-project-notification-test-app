@@ -1,4 +1,4 @@
-package com.saidmuratozdemir.notificationtestapp
+package com.saidmuratozdemir.notificationtestapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

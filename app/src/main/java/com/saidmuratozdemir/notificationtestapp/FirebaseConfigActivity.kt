@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.saidmuratozdemir.notificationtestapp.components.Toolbar
 import com.saidmuratozdemir.notificationtestapp.ui.theme.NotificationTestAppTheme
 
 class FirebaseConfigActivity : ComponentActivity() {
