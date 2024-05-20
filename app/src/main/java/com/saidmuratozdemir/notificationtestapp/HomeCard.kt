@@ -34,18 +34,21 @@ import com.saidmuratozdemir.notificationtestapp.ui.theme.poppinsBlack
 import com.saidmuratozdemir.notificationtestapp.ui.theme.poppinsMedium
 import com.saidmuratozdemir.notificationtestapp.ui.theme.primaryTextColor
 
-// HomeCard.kt
-
 @Composable
 fun HomeCard(
-    title: String, subtitle: String, image: Int, isSwitchEnabled: Boolean = false
+    title: String,
+    subtitle: String,
+    image: Int,
+    isSwitchEnabled: Boolean = false,
+    onClick: () -> Unit = {}
 ) {
     var checked by remember { mutableStateOf(false) }
 
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .clickable { }, Arrangement.Center
+            .clickable { onClick() },
+        Arrangement.Center
     ) {
         Row(
             modifier = Modifier

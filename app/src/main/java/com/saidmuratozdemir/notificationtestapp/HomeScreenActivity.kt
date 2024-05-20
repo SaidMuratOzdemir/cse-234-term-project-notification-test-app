@@ -1,5 +1,6 @@
 package com.saidmuratozdemir.notificationtestapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,7 +36,10 @@ class HomeScreenActivity : ComponentActivity() {
                         HomeCard(
                             title = "Enter Firebase Configurations",
                             subtitle = "Enter Firebase Configurations or import google-services.json file",
-                            R.drawable.settings, false
+                            R.drawable.settings, false,
+                            onClick = {
+                                startActivity(Intent(this@HomeScreenActivity, FirebaseConfigActivity::class.java))
+                            }
                         )
                     }
                     item {
@@ -45,7 +49,10 @@ class HomeScreenActivity : ComponentActivity() {
                         HomeCard(
                             title = "Check Notification Permission",
                             subtitle = "Check if notification permission is granted",
-                            R.drawable.check, false
+                            R.drawable.check, false,
+                            onClick = {
+                                PermissionCheck(this@HomeScreenActivity).checkNotificationPermission()
+                            }
                         )
                     }
                     item {
@@ -55,7 +62,10 @@ class HomeScreenActivity : ComponentActivity() {
                         HomeCard(
                             title = "See Device Token",
                             subtitle = "See Firebase token that is generated for your device",
-                            R.drawable.phone, false
+                            R.drawable.phone, false,
+                            onClick = {
+                                startActivity(Intent(this@HomeScreenActivity, SeeTokenActivity::class.java))
+                            }
                         )
                     }
                     item {
@@ -65,7 +75,10 @@ class HomeScreenActivity : ComponentActivity() {
                         HomeCard(
                             title = "See Notification History",
                             subtitle = "See notifications that has been sent to your device",
-                            R.drawable.history, false
+                            R.drawable.history, false,
+                            onClick = {
+                                startActivity(Intent(this@HomeScreenActivity, HistoryActivity::class.java))
+                            }
                         )
                     }
                     item {
@@ -76,7 +89,10 @@ class HomeScreenActivity : ComponentActivity() {
                             title = "Language",
                             subtitle = "Select Language",
                             R.drawable.language,
-                            false
+                            false,
+                            onClick = {
+                                // TODO: Implement language selection
+                            }
                         )
                     }
                     item {
@@ -97,7 +113,10 @@ class HomeScreenActivity : ComponentActivity() {
                             title = "About Us",
                             subtitle = "See information about us",
                             R.drawable.info,
-                            false
+                            false,
+                            onClick = {
+                                startActivity(Intent(this@HomeScreenActivity, AboutUsActivity::class.java))
+                            }
                         )
                     }
                 }
