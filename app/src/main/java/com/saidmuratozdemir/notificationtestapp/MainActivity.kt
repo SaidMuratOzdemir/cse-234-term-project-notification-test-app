@@ -20,11 +20,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Check if user is logged in
         if (checkIfUserIsLoggedIn()) {
-            // Navigate to HomeScreenActivity
             startActivity(Intent(this, HomeScreenActivity::class.java))
             finish()
+            return
         } else {
             setContent {
                 Column(
@@ -59,6 +58,15 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (checkIfUserIsLoggedIn()) {
+            startActivity(Intent(this, HomeScreenActivity::class.java))
+            finish()
+        }
+    }
+
     private fun checkIfUserIsLoggedIn(): Boolean {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         return firebaseUser != null
