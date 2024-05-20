@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ProfileCard(name:String,profilePicture: Int,gitHubLink:String,linkedInLink:String) {
-    val context= LocalContext.current
-    val github= remember { Intent(Intent.ACTION_VIEW, Uri.parse(gitHubLink)) }
-    val linkedIn= remember { Intent(Intent.ACTION_VIEW, Uri.parse(linkedInLink)) }
+fun ProfileCard(name: String, profilePicture: Int, gitHubLink: String, linkedInLink: String) {
+    val context = LocalContext.current
+    val github = remember { Intent(Intent.ACTION_VIEW, Uri.parse(gitHubLink)) }
+    val linkedIn = remember { Intent(Intent.ACTION_VIEW, Uri.parse(linkedInLink)) }
     Column(
         modifier = Modifier
             .size(310.dp, 610.dp)
@@ -46,8 +46,7 @@ fun ProfileCard(name:String,profilePicture: Int,gitHubLink:String,linkedInLink:S
                 shape = MaterialTheme.shapes.extraSmall,
             ),
 
-        Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally
+        Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(10.dp))
         Image(
@@ -66,24 +65,18 @@ fun ProfileCard(name:String,profilePicture: Int,gitHubLink:String,linkedInLink:S
             maxLines = 3,
             color = Color.Black
         )
-        Image(
-            painter = painterResource(id = R.drawable.github),
+        Image(painter = painterResource(id = R.drawable.github),
             contentDescription = "github",
             modifier = Modifier
                 .size(210.dp, 100.dp)
-                .clickable {context.startActivity(github) }
-        )
-        Image(
-            painter = painterResource(id = R.drawable.linkedin),
+                .clickable { context.startActivity(github) })
+        Image(painter = painterResource(id = R.drawable.linkedin),
             contentDescription = "linkedin",
             modifier = Modifier
                 .size(210.dp, 100.dp)
-                .clickable {context.startActivity(linkedIn)
-
-                }
-        )
+                .clickable {
+                    context.startActivity(linkedIn)
+                })
     }
     Spacer(modifier = Modifier.height(10.dp))
-
-
 }
