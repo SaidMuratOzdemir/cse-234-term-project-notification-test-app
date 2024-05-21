@@ -14,18 +14,23 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -52,27 +57,39 @@ class SeeTokenActivity : ComponentActivity() {
         }).toString()
         setContent {
             NotificationTestAppTheme {
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Image(
+                        painter = painterResource(id = R.drawable.backgroundblur),
+                        contentDescription = "back",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+
+                        )
+                }
                 Toolbar("TOKEN", "Your Firebase Token. That is unique for your device.")
 
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(top = 300.dp)
-                        .size(300.dp)
+                        .size(300.dp),
+                    Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = "Token: \n$token",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .size(130.dp),
+                            .size(320.dp, 190.dp),
                         textAlign = TextAlign.Center,
                         color = Color.Black,
 
                         )
+                    Spacer(modifier = Modifier.height(20.dp))
                     Row(modifier = Modifier.fillMaxSize(), Arrangement.Absolute.SpaceEvenly) {
                         Button(
                             onClick = {
-                                      token?.let { copyButton(it) }
+                                token?.let { copyButton(it) }
 
                             },
                             modifier = Modifier
@@ -80,8 +97,10 @@ class SeeTokenActivity : ComponentActivity() {
                                 .clip(CircleShape),
 
                             ) {
-                            Row(modifier = Modifier
-                                .size(100.dp)) {
+                            Row(
+                                modifier = Modifier
+                                    .size(100.dp)
+                            ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.copy),
                                     contentDescription = "copy button",
@@ -89,9 +108,11 @@ class SeeTokenActivity : ComponentActivity() {
 
                                 )
                                 Text(
-                                    text = "Copy", modifier = Modifier.fillMaxWidth(),
+                                    text = "Copy", modifier = Modifier.fillMaxWidth().fillMaxWidth()
+                                        .padding(top = 3.dp),
                                     fontWeight = FontWeight.Bold,
                                     maxLines = 1,
+                                    fontSize = 12.sp
                                 )
                             }
                         }
@@ -103,8 +124,10 @@ class SeeTokenActivity : ComponentActivity() {
                                 .clip(CircleShape)
                                 .clickable { },
                         ) {
-                            Row(modifier = Modifier
-                                .size(100.dp)) {
+                            Row(
+                                modifier = Modifier
+                                    .size(100.dp)
+                            ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.share),
                                     contentDescription = "share button",
@@ -148,7 +171,8 @@ class SeeTokenActivity : ComponentActivity() {
         val channelId = "notification_test_app_44"
         val channelName = "Notification Channel"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId, channelName, importance)
