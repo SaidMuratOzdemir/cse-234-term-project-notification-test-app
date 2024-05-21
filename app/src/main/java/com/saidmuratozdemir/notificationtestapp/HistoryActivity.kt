@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -21,12 +22,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.saidmuratozdemir.notificationtestapp.components.HomeCard
 import com.saidmuratozdemir.notificationtestapp.components.Toolbar
 import com.saidmuratozdemir.notificationtestapp.dataClasses.NotificationObject
 import com.saidmuratozdemir.notificationtestapp.ui.theme.NotificationTestAppTheme
+import com.saidmuratozdemir.notificationtestapp.ui.theme.poppinsMedium
 
 class HistoryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +42,7 @@ class HistoryActivity : ComponentActivity() {
                         painter = painterResource(id = R.drawable.backgroundblur),
                         contentDescription = "back",
                         modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop,
 
                     )
                 }
@@ -50,8 +53,8 @@ class HistoryActivity : ComponentActivity() {
                     painter = painterResource(id = R.drawable.delete),
                     contentDescription = "delete",
                     modifier = Modifier
-                        .size(50.dp)
-                        .offset(320.dp, 12.dp)
+                        .size(40.dp)
+                        .offset(340.dp, 31.dp)
                         .clickable {
                             val sharedPref =
                                 getSharedPreferences("notificationApp", Context.MODE_PRIVATE)
@@ -65,7 +68,7 @@ class HistoryActivity : ComponentActivity() {
                 val notificationList = getData(context)
 
                 if (notificationList.isEmpty()) {
-                    Text("No notifications yet", modifier = Modifier.padding(16.dp))
+                    Text("No notifications yet", modifier = Modifier.fillMaxWidth().offset(30.dp,350.dp), maxLines = 1, fontSize = 34.sp, fontFamily = poppinsMedium)
                 }
                 LazyColumn(
                     modifier = Modifier

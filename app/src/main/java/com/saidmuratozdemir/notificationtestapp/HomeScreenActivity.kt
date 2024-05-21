@@ -28,7 +28,6 @@ class HomeScreenActivity : ComponentActivity() {
         setContent {
             NotificationTestAppTheme {
 
-
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
                         painter = painterResource(id = R.drawable.backgroundblur),
@@ -40,12 +39,11 @@ class HomeScreenActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(top = 110.dp),
-
-                        ) {
+                    ) {
 
                         item {
                             HomeCard(title = "Enter Firebase Configurations",
-                                subtitle = "Enter Firebase Configurations or import google-services.json file",
+                                subtitle = "Enter Firebase Configurations",
                                 R.drawable.settings,
                                 false,
                                 onClick = {
@@ -105,18 +103,6 @@ class HomeScreenActivity : ComponentActivity() {
                             Spacer(modifier = Modifier.height(10.dp))
                         }
                         item {
-                            HomeCard(title = "Language",
-                                subtitle = "Select Language",
-                                R.drawable.language,
-                                false,
-                                onClick = {
-                                    // TODO: Implement language selection
-                                })
-                        }
-                        item {
-                            Spacer(modifier = Modifier.height(10.dp))
-                        }
-                        item {
                             HomeCard(
                                 title = "Change Theme",
                                 subtitle = "Switch between light and dark theme",
@@ -146,8 +132,6 @@ class HomeScreenActivity : ComponentActivity() {
                         subtitle = "Push Notification"
                     )
                 }
-
-
             }
         }
     }
