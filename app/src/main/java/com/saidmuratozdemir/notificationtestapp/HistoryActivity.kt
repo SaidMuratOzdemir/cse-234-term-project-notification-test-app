@@ -44,7 +44,7 @@ class HistoryActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop,
 
-                    )
+                        )
                 }
                 Toolbar("HISTORY", "All the notifications has sent your device")
 
@@ -56,11 +56,7 @@ class HistoryActivity : ComponentActivity() {
                         .size(40.dp)
                         .offset(340.dp, 31.dp)
                         .clickable {
-                            val sharedPref =
-                                getSharedPreferences("notificationApp", Context.MODE_PRIVATE)
-                            val editor = sharedPref.edit()
-                            editor.putString("NotificationHistory", null)
-                            editor.apply()
+                            deleteButton()
                         },
                 )
 
@@ -68,7 +64,15 @@ class HistoryActivity : ComponentActivity() {
                 val notificationList = getData(context)
 
                 if (notificationList.isEmpty()) {
-                    Text("No notifications yet", modifier = Modifier.fillMaxWidth().offset(30.dp,350.dp), maxLines = 1, fontSize = 34.sp, fontFamily = poppinsMedium)
+                    Text(
+                        "No notifications yet",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .offset(30.dp, 350.dp),
+                        maxLines = 1,
+                        fontSize = 34.sp,
+                        fontFamily = poppinsMedium
+                    )
                 }
                 LazyColumn(
                     modifier = Modifier
@@ -86,6 +90,14 @@ class HistoryActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun deleteButton() {
+        val sharedPref =
+            getSharedPreferences("notificationApp", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString("NotificationHistory", null)
+        editor.apply()
     }
 
     private fun getData(context: Context): ArrayList<NotificationObject> {
