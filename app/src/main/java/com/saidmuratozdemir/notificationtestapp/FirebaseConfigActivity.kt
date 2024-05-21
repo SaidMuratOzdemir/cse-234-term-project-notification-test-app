@@ -30,8 +30,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.saidmuratozdemir.notificationtestapp.components.Toolbar
@@ -43,12 +46,22 @@ class FirebaseConfigActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NotificationTestAppTheme {
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Image(
+                        painter = painterResource(id = R.drawable.backgroundblur),
+                        contentDescription = "back",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+
+                    )
+                }
                 Box(modifier = Modifier.fillMaxSize()) {
                     Toolbar("FIREBASE CONFIGURATIONS", "Firebase Configuration Settings")
                     Image(painter = painterResource(id = R.drawable.save),
                         contentDescription = "save button",
                         modifier = Modifier
-                            .padding(start = 325.dp)
+                            .padding(start = 330.dp)
                             .padding(top = 3.dp)
                             .clickable { }
                             .windowInsetsPadding(insets = WindowInsets.statusBars))
@@ -56,7 +69,8 @@ class FirebaseConfigActivity : ComponentActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 210.dp), Arrangement.Center
+                        .padding(top = 210.dp), Arrangement.Center,
+
                 ) {
 
                     StringTextField("Project Url")
@@ -84,15 +98,17 @@ class FirebaseConfigActivity : ComponentActivity() {
                     .align(Alignment.CenterVertically)
                     .size(110.dp, 20.dp),
                 maxLines = 1,
-                color = Color.Gray,
+                color = Color.Black,
+                fontWeight = FontWeight.SemiBold
             )
 
-            TextField(value = textFieldValue,
+            TextField(
+                value = textFieldValue,
                 onValueChange = { textFieldValue = it },
                 label = { Text("Enter $text") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .size(40.dp)
+                    .size(50.dp)
                     .clip(CircleShape)
             )
         }

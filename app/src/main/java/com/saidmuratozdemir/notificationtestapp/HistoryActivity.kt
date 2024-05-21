@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -32,7 +34,18 @@ class HistoryActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NotificationTestAppTheme {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Image(
+                        painter = painterResource(id = R.drawable.backgroundblur),
+                        contentDescription = "back",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+
+                    )
+                }
                 Toolbar("HISTORY", "All the notifications has sent your device")
+
+
                 Image(
                     painter = painterResource(id = R.drawable.delete),
                     contentDescription = "delete",
@@ -40,7 +53,8 @@ class HistoryActivity : ComponentActivity() {
                         .size(50.dp)
                         .offset(320.dp, 12.dp)
                         .clickable {
-                            val sharedPref = getSharedPreferences("notificationApp", Context.MODE_PRIVATE)
+                            val sharedPref =
+                                getSharedPreferences("notificationApp", Context.MODE_PRIVATE)
                             val editor = sharedPref.edit()
                             editor.putString("NotificationHistory", null)
                             editor.apply()
@@ -76,7 +90,8 @@ class HistoryActivity : ComponentActivity() {
         val gson = Gson()
         val json = sharedPref.getString("NotificationHistory", null)
         val type = object : TypeToken<ArrayList<NotificationObject>>() {}.type
-        val notificationList: ArrayList<NotificationObject> = gson.fromJson(json, type) ?: arrayListOf()
+        val notificationList: ArrayList<NotificationObject> =
+            gson.fromJson(json, type) ?: arrayListOf()
 
         return notificationList
     }

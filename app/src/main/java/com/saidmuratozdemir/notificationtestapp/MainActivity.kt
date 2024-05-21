@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -64,7 +65,7 @@ class MainActivity : ComponentActivity() {
                 contentScale = ContentScale.Crop
             )
 
-            Box(modifier =Modifier.size(300.dp,580.dp)){
+            Box(modifier = Modifier.size(300.dp, 580.dp)) {
 
                 Image(
                     painter = painterResource(id = R.drawable.background),
@@ -101,12 +102,26 @@ class MainActivity : ComponentActivity() {
                             onClick = {
                                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                             },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF382c84)),
+                            modifier = Modifier.size(
+                                120.dp,
+                                60.dp
+                            )
+                        ) { Text(text = "Giriş Yap") }
+                        Button(
+                            onClick = {
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        RegisterActivity::class.java
+                                    )
+                                )
+
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF382c84)),
                             modifier = Modifier.size(120.dp, 60.dp)
-                        ) { Text(text = "Sign In") }
-                        Button(onClick = {
-                            startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
-                        }, modifier = Modifier.size(120.dp, 60.dp)) {
-                            Text(text = "Sign Up")
+                        ) {
+                            Text(text = "Kayıt Ol")
                         }
                     }
                 }
