@@ -39,11 +39,11 @@ fun ProfileCard(name: String, profilePicture: Int, gitHubLink: String, linkedInL
     Column(
         modifier = Modifier
             .size(310.dp, 610.dp)
-            .background(Color(0xFFF8F9FA))
             .fillMaxSize(1f)
-            .border(BorderStroke(color = Color(0xFFFDE8A0), width = 3.dp))
+            .border(BorderStroke(color = Color.Black, width = 1.dp))
+            .background(Color.Transparent)
             .shadow(
-                elevation = 4.dp,
+                elevation = 1.dp,
                 shape = MaterialTheme.shapes.extraSmall,
             ),
 
