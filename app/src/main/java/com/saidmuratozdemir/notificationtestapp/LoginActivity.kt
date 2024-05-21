@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -88,10 +89,12 @@ class LoginActivity : ComponentActivity() {
                                 onValueChange = { email = it },
                                 label = { Text("E-Mail") },
                                 modifier = Modifier.shadow(
-                                    elevation = 1.dp,
-                                    shape = RoundedCornerShape(8.dp)
+                                    elevation = 1.dp, shape = RoundedCornerShape(8.dp)
                                 ),
-                                colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, cursorColor = Color.Black)
+                                colors = TextFieldDefaults.colors(
+                                    focusedContainerColor = Color.Transparent,
+                                    cursorColor = Color.Black
+                                )
 
                             )
                             Spacer(modifier = Modifier.height(8.dp))
@@ -102,37 +105,43 @@ class LoginActivity : ComponentActivity() {
                                 label = { Text("Password") },
                                 visualTransformation = PasswordVisualTransformation(),
                                 modifier = Modifier.shadow(
-                                    elevation = 1.dp,
-                                    shape = RoundedCornerShape(8.dp)
+                                    elevation = 1.dp, shape = RoundedCornerShape(8.dp)
                                 ),
-                                colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, cursorColor = Color.Black)
+                                colors = TextFieldDefaults.colors(
+                                    focusedContainerColor = Color.Transparent,
+                                    cursorColor = Color.Black
+                                )
                             )
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            Button(onClick = {
-                                scope.launch { // Launch coroutine for async work
-                                    val result = signInWithEmailAndPassword(email, password)
-                                    if (result.isFailure) {
-                                        error = true
-                                        val errorMessage =
-                                            when (val exception = result.exceptionOrNull()) {
-                                                is FirebaseAuthInvalidUserException -> "Bu e-posta adresiyle kayıtlı bir kullanıcı yok."
-                                                is FirebaseAuthInvalidCredentialsException -> "E-posta veya şifre yanlış."
-                                                else -> "Giriş başarısız oldu. Lütfen tekrar deneyin."  // Genel hata mesajı
-                                            }
-                                        Toast.makeText(
-                                            this@LoginActivity, errorMessage, Toast.LENGTH_LONG
-                                        ).show()
-                                    } else {
-                                        Toast.makeText(
-                                            this@LoginActivity, "Başarılı", Toast.LENGTH_LONG
-                                        ).show()
-                                        finish()
-                                        return@launch
+                            Button(
+                                onClick = {
+                                    scope.launch { // Launch coroutine for async work
+                                        val result = signInWithEmailAndPassword(email, password)
+                                        if (result.isFailure) {
+                                            error = true
+                                            val errorMessage =
+                                                when (val exception = result.exceptionOrNull()) {
+                                                    is FirebaseAuthInvalidUserException -> "Bu e-posta adresiyle kayıtlı bir kullanıcı yok."
+                                                    is FirebaseAuthInvalidCredentialsException -> "E-posta veya şifre yanlış."
+                                                    else -> "Giriş başarısız oldu. Lütfen tekrar deneyin."  // Genel hata mesajı
+                                                }
+                                            Toast.makeText(
+                                                this@LoginActivity, errorMessage, Toast.LENGTH_LONG
+                                            ).show()
+                                        } else {
+                                            Toast.makeText(
+                                                this@LoginActivity, "Başarılı", Toast.LENGTH_LONG
+                                            ).show()
+                                            finish()
+                                            return@launch
+                                        }
                                     }
-                                }
 
-                            }) {
+                                }, colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF382c84)
+                                )
+                            ) {
                                 Text("Giriş Yap")
                             }
                         }
