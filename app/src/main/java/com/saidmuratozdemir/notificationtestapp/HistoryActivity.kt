@@ -40,7 +40,7 @@ class HistoryActivity : ComponentActivity() {
                         .size(50.dp)
                         .offset(320.dp, 12.dp)
                         .clickable {
-                            val sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+                            val sharedPref = getSharedPreferences("notificationApp", Context.MODE_PRIVATE)
                             val editor = sharedPref.edit()
                             editor.putString("NotificationHistory", null)
                             editor.apply()
@@ -72,7 +72,7 @@ class HistoryActivity : ComponentActivity() {
     }
 
     private fun getData(context: Context): ArrayList<NotificationObject> {
-        val sharedPref = context.getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        val sharedPref = context.getSharedPreferences("notificationApp", Context.MODE_PRIVATE)
         val gson = Gson()
         val json = sharedPref.getString("NotificationHistory", null)
         val type = object : TypeToken<ArrayList<NotificationObject>>() {}.type
