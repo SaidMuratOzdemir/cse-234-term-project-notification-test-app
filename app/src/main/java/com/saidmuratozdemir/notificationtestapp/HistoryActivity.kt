@@ -64,6 +64,7 @@ class HistoryActivity : ComponentActivity() {
                         .offset(340.dp, 31.dp)
                         .clickable {
                             deleteButton()
+                            notificationList = notificationList.toMutableList().apply { clear() } as ArrayList<NotificationObject>
 
                         },
                 )
@@ -104,9 +105,6 @@ class HistoryActivity : ComponentActivity() {
         val editor = sharedPref.edit()
         editor.putString("NotificationHistory", null)
         editor.apply()
-        notificationList = notificationList.toMutableList().apply { clear() } as ArrayList<NotificationObject>
-
-
     }
 
     private fun getData(context: Context): ArrayList<NotificationObject> {
