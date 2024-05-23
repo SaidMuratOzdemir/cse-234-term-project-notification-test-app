@@ -12,7 +12,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,15 +57,13 @@ class SeeTokenActivity : ComponentActivity() {
         }).toString()
         setContent {
             NotificationTestAppTheme {
-
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
                         painter = painterResource(id = R.drawable.backgroundblur),
                         contentDescription = "back",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop,
-
-                        )
+                    )
                 }
                 Toolbar("TOKEN", "Your Firebase Token. That is unique for your device.")
 
@@ -79,36 +77,35 @@ class SeeTokenActivity : ComponentActivity() {
                 ) {
                     Text(
                         text = "Token: \n$token",
-                        modifier = Modifier
-                            .size(320.dp, 190.dp),
+                        modifier = Modifier.size(320.dp, 190.dp),
                         textAlign = TextAlign.Center,
                         color = Color.Black,
-
-                        )
+                    )
                     Spacer(modifier = Modifier.height(20.dp))
                     Row(modifier = Modifier.fillMaxSize(), Arrangement.Absolute.SpaceEvenly) {
                         Button(
                             onClick = {
                                 token?.let { copyButton(it) }
-
                             },
                             modifier = Modifier
                                 .size(105.dp, 40.dp)
                                 .clip(CircleShape),
-
-                            ) {
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF332885)
+                            ),
+                        ) {
                             Row(
-                                modifier = Modifier
-                                    .size(100.dp)
+                                modifier = Modifier.size(100.dp)
                             ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.copy),
                                     contentDescription = "copy button",
                                     modifier = Modifier
-
                                 )
                                 Text(
-                                    text = "Copy", modifier = Modifier.fillMaxWidth().fillMaxWidth()
+                                    text = "Copy",
+                                    modifier = Modifier
+                                        .fillMaxWidth()
                                         .padding(top = 3.dp),
                                     fontWeight = FontWeight.Bold,
                                     maxLines = 1,
@@ -121,12 +118,13 @@ class SeeTokenActivity : ComponentActivity() {
                             onClick = { token?.let { shareButton(it) } },
                             modifier = Modifier
                                 .size(105.dp, 40.dp)
-                                .clip(CircleShape)
-                                .clickable { },
+                                .clip(CircleShape),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF332885)
+                            ),
                         ) {
                             Row(
-                                modifier = Modifier
-                                    .size(100.dp)
+                                modifier = Modifier.size(100.dp)
                             ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.share),
@@ -193,4 +191,3 @@ class SeeTokenActivity : ComponentActivity() {
         }
     }
 }
-
