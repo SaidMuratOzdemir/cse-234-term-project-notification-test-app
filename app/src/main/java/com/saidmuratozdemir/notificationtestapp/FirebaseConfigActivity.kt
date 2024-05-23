@@ -70,7 +70,7 @@ class FirebaseConfigActivity : ComponentActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = 110.dp),
+                        .padding(top = 200.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     StringTextField("Project URL", firebaseConfig.projectUrl) { projectUrl ->
