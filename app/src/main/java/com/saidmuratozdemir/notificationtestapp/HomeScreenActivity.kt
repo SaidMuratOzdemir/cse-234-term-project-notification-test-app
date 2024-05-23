@@ -1,6 +1,10 @@
 package com.saidmuratozdemir.notificationtestapp
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,16 +21,31 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.saidmuratozdemir.notificationtestapp.components.HomeCard
 import com.saidmuratozdemir.notificationtestapp.components.Toolbar
 import com.saidmuratozdemir.notificationtestapp.ui.theme.NotificationTestAppTheme
 
 class HomeScreenActivity : ComponentActivity() {
+    private var token: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val darkMode =
-            getSharedPreferences("notificationApp", MODE_PRIVATE).getBoolean("isDark", false)
+        FirebaseApp.initializeApp(this)
+        createNotificationChannel()
+        getToken(object : TokenCallback {
+            override fun onTokenReceived(token: String) {
+                val sharedPreferences = getSharedPreferences("notificationApp", MODE_PRIVATE)
+                sharedPreferences.edit().putString("token", token).apply()
+                this@HomeScreenActivity.token = token
+            }
+        }).toString()
+
+        val sharedPreferences = getSharedPreferences("notificationApp", MODE_PRIVATE)
+        sharedPreferences.edit().putString("token", token).apply()
+
+        val darkMode = sharedPreferences.getBoolean("isDark", false)
         setContent {
             NotificationTestAppTheme {
                 Box(modifier = Modifier.fillMaxSize()) {
@@ -145,4 +164,31 @@ class HomeScreenActivity : ComponentActivity() {
         ).apply()
         recreate()
     }
+
+    interface TokenCallback {
+        fun onTokenReceived(token: String)
+    }
+
+    private fun getToken(callback: TokenCallback) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                callback.onTokenReceived(token)
+            }
+        }
+    }
+
+    private fun createNotificationChannel() {
+        val channelId = "notification_test_app_44"
+        val channelName = "Notification Channel"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, channelName, importance)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
 }

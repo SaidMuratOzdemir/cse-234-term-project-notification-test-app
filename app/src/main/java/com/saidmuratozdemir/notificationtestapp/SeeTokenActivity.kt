@@ -1,12 +1,8 @@
 package com.saidmuratozdemir.notificationtestapp
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,25 +32,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.firebase.FirebaseApp
-import com.google.firebase.messaging.FirebaseMessaging
 import com.saidmuratozdemir.notificationtestapp.components.Toolbar
 import com.saidmuratozdemir.notificationtestapp.ui.theme.NotificationTestAppTheme
 
 class SeeTokenActivity : ComponentActivity() {
-    private var token: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        FirebaseApp.initializeApp(this)
-        createNotificationChannel()
-        getToken(object : TokenCallback {
-            override fun onTokenReceived(token: String) {
-                val sharedPreferences = getSharedPreferences("notificationApp", MODE_PRIVATE)
-                sharedPreferences.edit().putString("token", token).apply()
-                this@SeeTokenActivity.token = token
-            }
-        }).toString()
+        val token = getSharedPreferences("notificationApp", MODE_PRIVATE).getString("token", null)
         setContent {
             NotificationTestAppTheme {
                 Box(modifier = Modifier.fillMaxSize()) {
@@ -163,31 +148,5 @@ class SeeTokenActivity : ComponentActivity() {
 
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
-    }
-
-    private fun createNotificationChannel() {
-        val channelId = "notification_test_app_44"
-        val channelName = "Notification Channel"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, channelName, importance)
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    interface TokenCallback {
-        fun onTokenReceived(token: String)
-    }
-
-    private fun getToken(callback: TokenCallback) {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val token = task.result
-                callback.onTokenReceived(token)
-            }
-        }
     }
 }
