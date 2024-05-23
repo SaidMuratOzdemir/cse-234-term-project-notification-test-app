@@ -50,11 +50,9 @@ class HistoryActivity : ComponentActivity() {
                         contentDescription = "back",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop,
-
-                        )
+                    )
                 }
                 Toolbar("HISTORY", "All the notifications has sent your device")
-
 
                 Image(
                     painter = painterResource(id = R.drawable.delete),
@@ -64,11 +62,12 @@ class HistoryActivity : ComponentActivity() {
                         .offset(340.dp, 31.dp)
                         .clickable {
                             deleteButton()
-                            notificationList = notificationList.toMutableList().apply { clear() } as ArrayList<NotificationObject>
+                            notificationList = notificationList
+                                .toMutableList()
+                                .apply { clear() } as ArrayList<NotificationObject>
 
                         },
                 )
-
 
                 if (notificationList.isEmpty()) {
                     Text(
@@ -90,7 +89,10 @@ class HistoryActivity : ComponentActivity() {
                         HomeCard(
                             title = notificationList[it].title,
                             subtitle = notificationList[it].body + " " + notificationList[it].date,
-                            R.drawable.ic_launcher_foreground
+                            R.drawable.logo,
+                            getSharedPreferences(
+                                "notificationApp", MODE_PRIVATE
+                            ).getBoolean("isDark", false),
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                     }
@@ -100,8 +102,7 @@ class HistoryActivity : ComponentActivity() {
     }
 
     private fun deleteButton() {
-        val sharedPref =
-            getSharedPreferences("notificationApp", MODE_PRIVATE)
+        val sharedPref = getSharedPreferences("notificationApp", MODE_PRIVATE)
         val editor = sharedPref.edit()
         editor.putString("NotificationHistory", null)
         editor.apply()
