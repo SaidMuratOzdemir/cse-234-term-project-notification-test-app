@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.NotificationTestApp"
+        tools:targetApi="31" >
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:label="@string/title_activity_register"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".SeeTokenActivity"
+            android:exported="false"
+            android:label="@string/title_activity_see_token"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_history"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".FirebaseConfigActivity"
+            android:exported="false"
+            android:label="@string/title_activity_firebase_config"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_about_us"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".HomeScreenActivity"
+            android:exported="false"
+            android:label="@string/title_activity_home_screen"
+            android:theme="@style/Theme.NotificationTestApp" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.NotificationTestApp" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".helpers.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>
