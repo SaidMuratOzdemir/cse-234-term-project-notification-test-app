@@ -59,7 +59,6 @@ class LoginActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         contentDescription = "",
                         contentScale = ContentScale.Crop
-
                     )
                     Box(modifier = Modifier.size(300.dp, 580.dp)) {
                         Image(
@@ -68,8 +67,6 @@ class LoginActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
                         )
-
-
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -95,7 +92,6 @@ class LoginActivity : ComponentActivity() {
                                     focusedContainerColor = Color.Transparent,
                                     cursorColor = Color.Black
                                 )
-
                             )
                             Spacer(modifier = Modifier.height(8.dp))
 
@@ -116,7 +112,7 @@ class LoginActivity : ComponentActivity() {
 
                             Button(
                                 onClick = {
-                                    scope.launch { // Launch coroutine for async work
+                                    scope.launch {
                                         val result = signInWithEmailAndPassword(email, password)
                                         if (result.isFailure) {
                                             error = true
@@ -124,7 +120,7 @@ class LoginActivity : ComponentActivity() {
                                                 when (val exception = result.exceptionOrNull()) {
                                                     is FirebaseAuthInvalidUserException -> "Bu e-posta adresiyle kayıtlı bir kullanıcı yok."
                                                     is FirebaseAuthInvalidCredentialsException -> "E-posta veya şifre yanlış."
-                                                    else -> "Giriş başarısız oldu. Lütfen tekrar deneyin."  // Genel hata mesajı
+                                                    else -> "Giriş başarısız oldu. Lütfen tekrar deneyin."
                                                 }
                                             Toast.makeText(
                                                 this@LoginActivity, errorMessage, Toast.LENGTH_LONG
@@ -137,7 +133,6 @@ class LoginActivity : ComponentActivity() {
                                             return@launch
                                         }
                                     }
-
                                 }, colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFF382c84)
                                 )
@@ -145,13 +140,8 @@ class LoginActivity : ComponentActivity() {
                                 Text("Giriş Yap")
                             }
                         }
-
-
                     }
-
                 }
-
-
             }
         }
     }
