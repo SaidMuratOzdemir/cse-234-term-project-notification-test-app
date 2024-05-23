@@ -13,16 +13,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -39,11 +33,9 @@ fun HomeCard(
     title: String,
     subtitle: String,
     image: Int,
-    isSwitchEnabled: Boolean = false,
+    isDark: Boolean,
     onClick: () -> Unit = {}
 ) {
-    var checked by remember { mutableStateOf(false) }
-
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -55,7 +47,7 @@ fun HomeCard(
                 .size(width = 360.dp, height = 70.dp)
                 .clip(RoundedCornerShape(50.dp))
                 .border(width = 3.dp, color = Color.Transparent, shape = CircleShape)
-                .background(primaryTextColor),
+                .background(color = if (isDark) Color.Black else primaryTextColor),
 
             Arrangement.Center
         ) {
@@ -83,29 +75,18 @@ fun HomeCard(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontFamily = poppinsBlack,
+                        color = if (isDark) Color.Gray else Color.Black,
                         fontSize = 14.sp
                     )
 
                     Text(
                         text = subtitle,
-                        modifier = Modifier.width(200.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         maxLines = 3,
                         fontFamily = poppinsMedium,
                         color = Color.Gray,
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                     )
-                }
-                Column {
-                    if (isSwitchEnabled) {
-                        Switch(
-                            checked = checked,
-                            onCheckedChange = { checked = it },
-                            modifier = Modifier
-                                .size(40.dp)
-                                .padding(top = 30.dp)
-                                .padding(start = 240.dp)
-                        )
-                    }
                 }
             }
         }

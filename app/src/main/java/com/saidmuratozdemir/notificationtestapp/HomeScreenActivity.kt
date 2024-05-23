@@ -25,9 +25,10 @@ class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val darkMode =
+            getSharedPreferences("notificationApp", MODE_PRIVATE).getBoolean("isDark", false)
         setContent {
             NotificationTestAppTheme {
-
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
                         painter = painterResource(id = R.drawable.backgroundblur),
@@ -45,7 +46,7 @@ class HomeScreenActivity : ComponentActivity() {
                             HomeCard(title = "Enter Firebase Configurations",
                                 subtitle = "Enter Firebase Configurations",
                                 R.drawable.settings,
-                                false,
+                                darkMode,
                                 onClick = {
                                     startActivity(
                                         Intent(
@@ -62,7 +63,7 @@ class HomeScreenActivity : ComponentActivity() {
                             HomeCard(title = "Check Notification Permission",
                                 subtitle = "Check if notification permission is granted",
                                 R.drawable.check,
-                                false,
+                                darkMode,
                                 onClick = {
                                     PermissionCheck(this@HomeScreenActivity).checkNotificationPermission()
                                 })
@@ -74,7 +75,7 @@ class HomeScreenActivity : ComponentActivity() {
                             HomeCard(title = "See Device Token",
                                 subtitle = "See Firebase token that is generated for your device",
                                 R.drawable.phone,
-                                false,
+                                darkMode,
                                 onClick = {
                                     startActivity(
                                         Intent(
@@ -90,7 +91,7 @@ class HomeScreenActivity : ComponentActivity() {
                             HomeCard(title = "See Notification History",
                                 subtitle = "See notifications that has been sent to your device",
                                 R.drawable.history,
-                                false,
+                                darkMode,
                                 onClick = {
                                     startActivity(
                                         Intent(
@@ -103,12 +104,13 @@ class HomeScreenActivity : ComponentActivity() {
                             Spacer(modifier = Modifier.height(10.dp))
                         }
                         item {
-                            HomeCard(
-                                title = "Change Theme",
+                            HomeCard(title = "Change Theme",
                                 subtitle = "Switch between light and dark theme",
                                 R.drawable.darkmode,
-                                true
-                            )
+                                darkMode,
+                                onClick = {
+                                    changeTheme()
+                                })
                         }
                         item {
                             Spacer(modifier = Modifier.height(10.dp))
@@ -117,7 +119,7 @@ class HomeScreenActivity : ComponentActivity() {
                             HomeCard(title = "About Us",
                                 subtitle = "See information about us",
                                 R.drawable.info,
-                                false,
+                                darkMode,
                                 onClick = {
                                     startActivity(
                                         Intent(
@@ -134,5 +136,13 @@ class HomeScreenActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun changeTheme() {
+        getSharedPreferences("notificationApp", MODE_PRIVATE).edit().putBoolean(
+            "isDark",
+            !getSharedPreferences("notificationApp", MODE_PRIVATE).getBoolean("isDark", false)
+        ).apply()
+        recreate()
     }
 }
