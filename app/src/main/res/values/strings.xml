@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Notification Test App</string>
+    <string name="title_activity_home_screen">HomeScreenActivity</string>
+    <string name="title_activity_about_us">AboutUsActivity</string>
+    <string name="title_activity_firebase_config">FirebaseConfigActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="title_activity_see_token">SeeTokenActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_permission">PermissionActivity</string>
 </resources>

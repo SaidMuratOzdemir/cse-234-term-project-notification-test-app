@@ -1,127 +1,121 @@
 package com.saidmuratozdemir.notificationtestapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
-import android.view.View
-import com.saidmuratozdemir.notificationtestapp.databinding.ActivityHistoryBinding
-import com.saidmuratozdemir.notificationtestapp.listeners.ItemClickListener
-import com.saidmuratozdemir.notificationtestapp.model.CardModel
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.saidmuratozdemir.notificationtestapp.components.HomeCard
+import com.saidmuratozdemir.notificationtestapp.components.Toolbar
+import com.saidmuratozdemir.notificationtestapp.dataClasses.NotificationObject
+import com.saidmuratozdemir.notificationtestapp.ui.theme.NotificationTestAppTheme
+import com.saidmuratozdemir.notificationtestapp.ui.theme.poppinsMedium
 
-class HistoryActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHistoryBinding
+class HistoryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHistoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        enableEdgeToEdge()
+        setContent {
+            NotificationTestAppTheme {
+                val context = LocalContext.current
+                var notificationList by remember { mutableStateOf(getData(context)) }
 
-        val homeCardList = listOf(
-            CardModel(
-                "notification 1",
-                "Notification 1 Title",
-                "Notification 1 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 2",
-                "Notification 2 Title",
-                "Notification 2 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 3",
-                "Notification 3 Title",
-                "Notification 3 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 4",
-                "Notification 4 Title",
-                "Notification 4 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 5",
-                "Notification 5 Title",
-                "Notification 5 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 6",
-                "Notification 6 Title",
-                "Notification 6 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 7",
-                "Notification 7 Title",
-                "Notification 7 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 8",
-                "Notification 8 Title",
-                "Notification 8 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 9",
-                "Notification 9 Title",
-                "Notification 9 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 10",
-                "Notification 10 Title",
-                "Notification 10 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 11",
-                "Notification 11 Title",
-                "Notification 11 Description",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "notification 12",
-                "Notification 12 Title",
-                "Notification 12 Description",
-                R.drawable.history,
-                false
-            )
-        )
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Image(
+                        painter = painterResource(id = R.drawable.backgroundblur),
+                        contentDescription = "back",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+                    )
+                }
+                Toolbar("HISTORY", "All the notifications has sent your device")
 
-        val cardAdapter = CardAdapter(itemClickListenner)
-        cardAdapter.setList(homeCardList)
+                Image(
+                    painter = painterResource(id = R.drawable.delete),
+                    contentDescription = "delete",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .offset(340.dp, 31.dp)
+                        .clickable {
+                            deleteButton()
+                            notificationList = notificationList
+                                .toMutableList()
+                                .apply { clear() } as ArrayList<NotificationObject>
 
-        binding.recyclerView.adapter = cardAdapter
+                        },
+                )
 
-        binding.buttonDeleteAll.setOnClickListener {
-            cardAdapter.setList(emptyList())
+                if (notificationList.isEmpty()) {
+                    Text(
+                        "No notifications yet",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .offset(30.dp, 350.dp),
+                        maxLines = 1,
+                        fontSize = 34.sp,
+                        fontFamily = poppinsMedium
+                    )
+                }
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 110.dp)
+                ) {
+                    items(notificationList.size) {
+                        HomeCard(
+                            title = notificationList[it].title,
+                            subtitle = notificationList[it].body + " " + notificationList[it].date,
+                            R.drawable.logo,
+                            getSharedPreferences(
+                                "notificationApp", MODE_PRIVATE
+                            ).getBoolean("isDark", false),
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
+            }
         }
-
     }
 
+    private fun deleteButton() {
+        val sharedPref = getSharedPreferences("notificationApp", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString("NotificationHistory", null)
+        editor.apply()
+    }
 
-    private val itemClickListenner = object : ItemClickListener {
-        override fun onClick(objects: Any?) {
+    private fun getData(context: Context): ArrayList<NotificationObject> {
+        val sharedPref = context.getSharedPreferences("notificationApp", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPref.getString("NotificationHistory", null)
+        val type = object : TypeToken<ArrayList<NotificationObject>>() {}.type
+        val notificationList: ArrayList<NotificationObject> =
+            gson.fromJson(json, type) ?: arrayListOf()
 
-        }
-
-        override fun onLongClick(view: View, objects: Any?) {
-
-        }
-
-
+        return notificationList
     }
 }

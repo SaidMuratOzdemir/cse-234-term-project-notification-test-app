@@ -1,147 +1,147 @@
 package com.saidmuratozdemir.notificationtestapp
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.saidmuratozdemir.notificationtestapp.databinding.ActivityMainBinding
-import com.saidmuratozdemir.notificationtestapp.listeners.ItemClickListener
-import com.saidmuratozdemir.notificationtestapp.model.CardModel
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.google.firebase.auth.FirebaseAuth
 
-
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        enableEdgeToEdge()
 
-        val homeCardList = listOf(
-            CardModel(
-                "firebase_config",
-                "Enter Firebase Configurations",
-                "Enter Firebase configurations or import google-services.json file",
-                R.drawable.settings,
-                false
-            ),
-            CardModel(
-                "notification_permission",
-                "Check Notification Permission",
-                "Check if notification permission is granted",
-                R.drawable.check,
-                false
-            ),
-            CardModel(
-                "see_token",
-                "See Device Token",
-                "See Firebase token that is generated for your device",
-                R.drawable.phone,
-                false
-            ),
-            CardModel(
-                "notification_history",
-                "See Notification History",
-                "See notifications that has been sent to your device",
-                R.drawable.history,
-                false
-            ),
-            CardModel(
-                "language",
-                "Language",
-                "Select language",
-                R.drawable.language,
-                false
-            ),
-            CardModel(
-                "change_theme",
-                "Change Theme",
-                "Switch between light and dark theme",
-                R.drawable.darkmode,
-                true
-            ),
-            CardModel(
-                "about_us",
-                "About Us",
-                "See information about us",
-                R.drawable.info,
-                false
+        if (checkIfUserIsLoggedIn()) {
+            startActivity(Intent(this, HomeScreenActivity::class.java))
+            finish()
+            return
+        } else {
+            setContent {
+                MainScreen()
+
+            }
+        }
+    }
+
+    @Composable
+    @Preview
+    fun MainScreen() {
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.backgroundblur),
+                contentDescription = "Arka Plan Resmi",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
             )
-        )
 
-        val cardAdapter = CardAdapter(itemClickListener)
-        cardAdapter.setList(homeCardList)
-        binding.recyclerView.adapter = cardAdapter
+            Box(modifier = Modifier.size(300.dp, 580.dp)) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.background),
+                    contentDescription = "Arka Plan Resmi",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .shadow(
+                            elevation = 1.dp,
+                            shape = MaterialTheme.shapes.extraSmall,
+                        )
+                        .background(Color.Transparent),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+
+
+                    ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.logo),
+                        contentDescription = "App logo",
+                        modifier = Modifier.size(190.dp)
+                    )
+                    Spacer(modifier = Modifier.height(150.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Button(
+                            onClick = {
+                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF382c84)),
+                            modifier = Modifier.size(
+                                120.dp,
+                                60.dp
+                            )
+                        ) { Text(text = "Giriş Yap") }
+                        Button(
+                            onClick = {
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        RegisterActivity::class.java
+                                    )
+                                )
+
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF382c84)),
+                            modifier = Modifier.size(120.dp, 60.dp)
+                        ) {
+                            Text(text = "Kayıt Ol")
+                        }
+                    }
+                }
+
+            }
+
+        }
 
     }
 
-    private val itemClickListener = object : ItemClickListener {
-        override fun onClick(objects: Any?) {
-            val cardModel = objects as CardModel
-
-            when (cardModel.id) {
-                "firebase_config" -> {
-                    val intent = Intent(this@MainActivity, FirebaseConfigActivity::class.java)
-                    startActivity(intent)
-
-                }
-
-                "notification_permission" -> {
-                    // TODO: write
-                }
-
-                "see_token" -> {
-                    val intent = Intent(this@MainActivity, TokenActivity::class.java)
-                    intent.putExtra(
-                        "token",
-                        "d2nZK1JLTsuijPN__h9IwS:APA91bGTJFrjYViIIWkUvEoKcoT4XZavxXS3YObcjKghiP8olWHaNJnwJBzrYwrSmKx1tEYPOmkGr6ytBkTA3bcf6nbIaNx21dvnQ4GM2_XxFEK297Ze_xzRJJRn0Bh-12cK8YxyaHqK"
-                    )
-                    startActivity(intent)
-                }
-
-                "notification_history" -> {
-                    val intent = Intent(this@MainActivity, HistoryActivity::class.java)
-                    startActivity(intent)
-                }
-                "language" -> {
-
-                    val checkedItem = intArrayOf(0)
-
-                    val alertDialog: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
-
-                    alertDialog.setIcon(R.drawable.language)
-
-                    alertDialog.setTitle("Choose a Language")
-
-                    val listItems = arrayOf("English", "Turkish", "Spanish")
-
-                    alertDialog.setSingleChoiceItems(listItems, checkedItem[0]) { dialog, which ->
-                        checkedItem[0] = which
-                        dialog.dismiss()
-                    }
-
-                    alertDialog.setNegativeButton("Cancel") { _, _ -> }
-
-                    val customAlertDialog: AlertDialog = alertDialog.create()
-
-                    customAlertDialog.show()
-                }
-
-                "about_us" -> {
-                    val intent = Intent(this@MainActivity, AboutUsActivity::class.java)
-                    startActivity(intent)
-                }
-            }
+    override fun onStart() {
+        super.onStart()
+        if (checkIfUserIsLoggedIn()) {
+            startActivity(Intent(this, HomeScreenActivity::class.java))
+            finish()
         }
+    }
 
-        override fun onLongClick(view: View, objects: Any?) {
-
-        }
+    private fun checkIfUserIsLoggedIn(): Boolean {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        return firebaseUser != null
     }
 }
