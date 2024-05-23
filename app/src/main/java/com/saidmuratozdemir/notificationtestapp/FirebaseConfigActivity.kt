@@ -1,6 +1,5 @@
-package com.saidmuratozdemir.notificationtestapp // Paket adınızı buraya ekleyin
+package com.saidmuratozdemir.notificationtestapp
 
-// Gerekli importlar
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
