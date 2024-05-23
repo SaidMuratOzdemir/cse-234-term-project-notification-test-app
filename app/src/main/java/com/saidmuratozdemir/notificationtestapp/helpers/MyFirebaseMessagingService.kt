@@ -2,7 +2,6 @@ package com.saidmuratozdemir.notificationtestapp.helpers
 
 import android.app.NotificationManager
 import android.content.Context
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -37,6 +36,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d("FCM", "New token: $token")
+        getSharedPreferences("notificationApp", Context.MODE_PRIVATE).edit().putString("token", token).apply()
     }
 }
