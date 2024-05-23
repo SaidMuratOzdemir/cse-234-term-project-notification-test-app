@@ -19,8 +19,7 @@ class PermissionCheck(private val context: Context) {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (!notificationManager.areNotificationsEnabled()) {
-            AlertDialog.Builder(context)
-                .setTitle("Notification Permission")
+            AlertDialog.Builder(context).setTitle("Notification Permission")
                 .setMessage("Notification permission is not granted. Would you like to enable it?")
                 .setPositiveButton("Yes") { _, _ ->
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -28,9 +27,7 @@ class PermissionCheck(private val context: Context) {
                             putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
                         })
                     }
-                }
-                .setNegativeButton("No", null)
-                .show()
+                }.setNegativeButton("No", null).show()
         } else {
             val sharedPref = context.getSharedPreferences("notificationApp", Context.MODE_PRIVATE)
             sharedPref.edit()
@@ -40,25 +37,31 @@ class PermissionCheck(private val context: Context) {
             val channelId = "notification_test_app_44"
             val channelName = "Notification Channel"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                notificationManager.createNotificationChannel(
-                    NotificationChannel(
-                        channelId,
-                        channelName,
-                        importance
-                    )
-                )
-            }
 
             val myNotificationObject = NotificationObject(
                 "New Message Title",
-                "New message text. Notification ID: $lastNotificationId",
+                "New notification text. Notification ID: $lastNotificationId",
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 } else {
                     "N/A"
                 }
             )
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationManager.createNotificationChannel(
+                    NotificationChannel(
+                        channelId, channelName, importance
+                    )
+                )
+
+                val notification = android.app.Notification.Builder(context, channelId)
+                    .setContentTitle(myNotificationObject.title)
+                    .setContentText(myNotificationObject.body + " " + myNotificationObject.date)
+                    .setSmallIcon(R.drawable.logo).setAutoCancel(true).build()
+
+                notificationManager.notify(lastNotificationId, notification)
+            }
 
             val gson = Gson()
             val json = sharedPref.getString("NotificationHistory", null)
@@ -69,9 +72,7 @@ class PermissionCheck(private val context: Context) {
                 myNotificationObject
             )
             val newJson = gson.toJson(notificationList)
-            sharedPref.edit()
-                .putString("NotificationHistory", newJson)
-                .apply()
+            sharedPref.edit().putString("NotificationHistory", newJson).apply()
         }
     }
 }
