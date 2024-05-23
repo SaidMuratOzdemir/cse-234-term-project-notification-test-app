@@ -51,7 +51,7 @@ fun Toolbar(
             Image(
                 painter = painterResource(id = R.drawable.logo), contentDescription = "Logo",
                 modifier = Modifier
-                    .size(60.dp)
+                    .fillMaxSize()
                     .align(Alignment.CenterHorizontally)
 
             )
