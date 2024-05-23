@@ -59,7 +59,6 @@ class FirebaseConfigActivity : ComponentActivity() {
                         contentDescription = "back",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
-
                     )
                 }
                 Box(modifier = Modifier.fillMaxSize()) {
@@ -77,9 +76,7 @@ class FirebaseConfigActivity : ComponentActivity() {
                         .fillMaxWidth()
                         .padding(top = 210.dp),
                     Arrangement.Center,
-
-                    ) {
-
+                ) {
                     projectUrl = StringTextField("Project URL")
                     projectId = StringTextField("Project ID")
                     emailAddress = StringTextField("Email Address")
