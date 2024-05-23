@@ -19,7 +19,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -49,149 +47,130 @@ class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         auth = Firebase.auth
 
-
         super.onCreate(savedInstanceState)
         setContent {
             NotificationTestAppTheme {
-                var showRegistrationScreen by remember { mutableStateOf(true) }
+                var email by remember { mutableStateOf("") }
+                var password by remember { mutableStateOf("") }
+                var error by remember { mutableStateOf(false) }
+                val scope = rememberCoroutineScope()
 
-                if (showRegistrationScreen) {
-                    RegistrationScreen {
-                        showRegistrationScreen = false
-                    }
-                } else {
-                    LoginActivity()
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun RegistrationScreen(onRegistrationSuccess: () -> Unit) {
-        var email by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-        var error by remember { mutableStateOf(false) }
-        val scope = rememberCoroutineScope()
-
-
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Image(
-                painter = painterResource(id = R.drawable.backgroundblur),
-                modifier = Modifier.fillMaxSize(),
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-
-            )
-            Box(modifier = Modifier.size(300.dp, 580.dp)) {
-                Image(
-                    painter = painterResource(id = R.drawable.background),
-                    contentDescription = "Arka Plan Resmi",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Image(
+                        painter = painterResource(id = R.drawable.backgroundblur),
+                        modifier = Modifier.fillMaxSize(),
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop
+                    )
+                    Box(modifier = Modifier.size(300.dp, 580.dp)) {
                         Image(
-                            painter = painterResource(id = R.drawable.logo),
-                            contentDescription = "logo",
-                            modifier = Modifier.size(190.dp)
+                            painter = painterResource(id = R.drawable.background),
+                            contentDescription = "Arka Plan Resmi",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
                         )
-                        Spacer(modifier = Modifier.height(90.dp))
-                        OutlinedTextField(
-                            value = email,
-                            onValueChange = { email = it },
-                            label = { Text("E-Mail") },
-                            modifier = Modifier.shadow(
-                                elevation = 1.dp, shape = RoundedCornerShape(8.dp)
-                            ),
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor = Color.Transparent, cursorColor = Color.Black
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
 
-                        OutlinedTextField(
-                            value = password,
-                            onValueChange = { password = it },
-                            label = { Text("Password") },
-                            visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier.shadow(
-                                elevation = 1.dp, shape = RoundedCornerShape(8.dp)
-                            ),
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor = Color.Transparent, cursorColor = Color.Black
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = {
-                                scope.launch {
-                                    val result = createUserWithEmailAndPassword(email, password)
-                                    if (result.isFailure) {
-                                        error = true
-                                        val errorMessage =
-                                            when (val exception = result.exceptionOrNull()) {
-                                                is FirebaseAuthWeakPasswordException -> "Şifre en az 6 karakter olmalıdır."
-                                                is FirebaseAuthInvalidCredentialsException -> "Geçersiz e-posta adresi."
-                                                is FirebaseAuthUserCollisionException -> "Bu e-posta adresi zaten kullanılıyor."
-                                                else -> "Kayıt başarısız oldu: ${exception?.message}"
-                                            }
-                                        Toast.makeText(
-                                            this@RegisterActivity, errorMessage, Toast.LENGTH_LONG
-                                        ).show()
-
-                                    } else {
-                                        Toast.makeText(
-                                            this@RegisterActivity, "Başarılı", Toast.LENGTH_LONG
-                                        ).show()
-                                        finish()
-                                        return@launch
-                                    }
-                                }
-
-                            }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF382c84))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Text("Kayıt Ol")
+                                Image(
+                                    painter = painterResource(id = R.drawable.logo),
+                                    contentDescription = "logo",
+                                    modifier = Modifier.size(190.dp)
+                                )
+                                Spacer(modifier = Modifier.height(90.dp))
+                                OutlinedTextField(
+                                    value = email,
+                                    onValueChange = { email = it },
+                                    label = { Text("E-Mail") },
+                                    modifier = Modifier.shadow(
+                                        elevation = 1.dp, shape = RoundedCornerShape(8.dp)
+                                    ),
+                                    colors = TextFieldDefaults.colors(
+                                        focusedContainerColor = Color.Transparent,
+                                        cursorColor = Color.Black
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                OutlinedTextField(
+                                    value = password,
+                                    onValueChange = { password = it },
+                                    label = { Text("Password") },
+                                    visualTransformation = PasswordVisualTransformation(),
+                                    modifier = Modifier.shadow(
+                                        elevation = 1.dp, shape = RoundedCornerShape(8.dp)
+                                    ),
+                                    colors = TextFieldDefaults.colors(
+                                        focusedContainerColor = Color.Transparent,
+                                        cursorColor = Color.Black
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Button(
+                                    onClick = {
+                                        scope.launch {
+                                            val result =
+                                                createUserWithEmailAndPassword(email, password)
+                                            if (result.isFailure) {
+                                                error = true
+                                                val errorMessage = when (val exception =
+                                                    result.exceptionOrNull()) {
+                                                    is FirebaseAuthWeakPasswordException -> "Şifre en az 6 karakter olmalıdır."
+                                                    is FirebaseAuthInvalidCredentialsException -> "Geçersiz e-posta adresi."
+                                                    is FirebaseAuthUserCollisionException -> "Bu e-posta adresi zaten kullanılıyor."
+                                                    else -> "Kayıt başarısız oldu: ${exception?.message}"
+                                                }
+                                                Toast.makeText(
+                                                    this@RegisterActivity,
+                                                    errorMessage,
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+
+                                            } else {
+                                                Toast.makeText(
+                                                    this@RegisterActivity,
+                                                    "Başarılı",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                                finish()
+                                                return@launch
+                                            }
+                                        }
+                                    }, colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color(0xFF382c84)
+                                    )
+                                ) {
+                                    Text("Kayıt Ol")
+                                }
                             }
+                        }
                     }
                 }
-
-
             }
-
         }
     }
 
-
-    suspend fun createUserWithEmailAndPassword(email: String, password: String): Result<Unit> {
+    private suspend fun createUserWithEmailAndPassword(
+        email: String, password: String
+    ): Result<Unit> {
         return try {
             val auth = Firebase.auth
             auth.createUserWithEmailAndPassword(email, password).await()
             Result.success(Unit)
         } catch (exception: Exception) {
             Result.failure(exception)
-        }
-    }
-
-    @Preview
-    @Composable
-    fun DefaultPreview() {
-        NotificationTestAppTheme {
-            RegisterActivity().RegistrationScreen {}
         }
     }
 }
